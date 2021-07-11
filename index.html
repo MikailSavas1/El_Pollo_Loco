@@ -20,6 +20,7 @@
     <script src="models/coin.class.js"></script>
     <script src="models/character.class.js"></script>
     <script src="models/chicken.class.js"></script>
+    <script src="models/polito.class.js"></script>
     <script src="models/cloud.class.js"></script>
     <script src="models/world.class.js"></script>
     <script src="models/background-object.class.js"></script>
@@ -35,10 +36,10 @@
 
     <div style="position: relative; border: 1px solid white;">
 
-        <!-- Canvas, where the game takes place :) -->
+        <!-- 1. Canvas, where the game takes place :) -->
         <canvas id="canvas" width="720" height="480"></canvas>
 
-        <!-- In front of the canvas -->
+        <!-- 2. In front of the canvas -->
         <div class="container-in-foreground">
 
             <!-- start screen-->
@@ -48,29 +49,33 @@
             <!-- end screen-->
             <img id="end-screen" style="height: 100%;width: 100%;" class="d-none">
 
-            <!--how to play-->
+            <!-- how to play-->
             <img src="img/9.Intro _ Outro Image/Start Screen/MIKAIL.png"
                 style="position:absolute; height: 0;right: 0; width: 0;" id="how-to-play">
-            <div id="info" class="d-none info-about-game">
-                <u>El pollo loco</u> is tyrannizing your town. Avoid his <u>chicken</u> and get Pepe to the end to face up
-                him. Collect <u>Tabasco bottles</u> to get armed/equiped against him.
+
+            <!-- about game-->
+            <div id="info-about-game" class="d-none info-about-game">
+                <u>El pollo loco</u> is tyrannizing your town. Avoid his <u>chicken</u> and get Pepe to the end to face
+                up
+                him. Collect all <u>Tabasco bottles</u> to get armed/equiped against him.
             </div>
 
         </div>
 
-        <!-- buttons-->
+        <!-- 3. Buttons-->
+        <div class="ui-buttons">
 
-        <!-- start/play -->
-        <button id="start" onclick="startGame()" class="start-game-btn">Start Game</button>
+            <!-- start/play -->
+            <button id="start-btn" onclick="startGame()" class="start-game-btn">Start Game</button>
 
-        <!-- how to play -->
-        <button id="how-to-play-btn" onclick="openHowToPlay()"
-            style="position: absolute; right: 0; top: 0;margin: 20px; height: 30px;min-width: 36px;">How
-            to play?</button>
+            <!-- how to play -->
+            <button id="how-to-play-btn" onclick="openHowToPlay()">How to play?</button>
 
-        <!-- Game info -->
-        <button onmouseover="a()" onmouseout="b()"
-            style="position: absolute; right: 0; top: 40px;margin: 20px; height: 30px;">info</button>
+            <!-- Game info -->
+            <button onmouseover="showAboutGame()" onmouseout="hideAboutGame()" class="info-about-game-btn">info</button>
+
+        </div>
+
     </div>
 </body>
 

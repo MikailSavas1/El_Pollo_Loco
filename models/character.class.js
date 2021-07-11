@@ -81,7 +81,7 @@ class Character extends MovableObject {
 
     walking_sound = new Audio('audio/running.mp3');
     collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
-    coin_sound = new Audio('audio/coin.mp3');
+    coin_sound = new Audio('audio/collect_coin.mp3');
     hurt_sound = new Audio('audio/hurt.mp3');
     jump_sound = new Audio('audio/jump.mp3');
     throw_sound = new Audio('audio/throw.mp3');

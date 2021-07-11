@@ -57,68 +57,48 @@ window.addEventListener("keyup", (e) => {
 });
 
 function startGame() {
-    document.getElementById('start-screen').classList.add('d-none');
-    document.getElementById('start').classList.add('d-none');
+    clearStartScreen();
 
     canvas = document.getElementById('canvas');
     level1 = initLevel1();
     world = new World(canvas);
 
-    bg_audio.play();
+    AUDIO_BG.play();
 
     isGameEnd(); // checking
 }
 
-function openHowToPlay() {
-    document.getElementById('start').style.zIndex = -1;
-
-    document.getElementById('how-to-play').classList.add('add');
-    document.getElementById('how-to-play').classList.remove('remove');
-    document.getElementById('how-to-play-btn').innerHTML = 'X';
-    document.getElementById('how-to-play-btn').setAttribute('onclick', 'closeHowToPlay()');
+function clearStartScreen() {
+    document.getElementById('start-screen').classList.add('d-none');
+    document.getElementById('start-btn').classList.add('d-none');
 }
 
-function closeHowToPlay() {
-    document.getElementById('start').style.zIndex = 0;
-
-    document.getElementById('how-to-play').classList.remove('add');
-    document.getElementById('how-to-play').classList.add('remove');
-    document.getElementById('how-to-play-btn').innerHTML = 'How To Play';
-    document.getElementById('how-to-play-btn').blur();
-    document.getElementById('how-to-play-btn').setAttribute('onclick', 'openHowToPlay()');
-}
-
-let win_audio = new Audio('audio/win2.mp3');
-let lose_audio = new Audio('audio/lose2.mp3');
-let bg_audio = new Audio('audio/bg_music.mp3');
-bg_audio.volume = 0.05;
+//--------------- Game config  ---------------
+let AUDIO_WIN = new Audio('audio/win.mp3');
+let AUDIO_LOSE = new Audio('audio/lose.mp3');
+let AUDIO_BG = new Audio('audio/bg_music.mp3');
+AUDIO_BG.volume = 0.05;
+AUDIO_BG.loop = true;
 
 function isGameEnd() {
     let gameIsEnd = setInterval(() => {
-        if (world.level.endboss.isDead() || world.character.isDead()) {
+        if (gameOver()) {
             if (world.character.isDead()) {
                 world.character.fallingIntoDeath();
-                bg_audio.pause();
-                bg_audio.currentTime = 0;
-                lose_audio.play();
+                AUDIO_LOSE.play();
             } else {
-                bg_audio.pause();
-                bg_audio.currentTime = 0;
-                win_audio.play();
+                AUDIO_WIN.play();
             }
             clearInterval(gameIsEnd); // clear to continue of checking further
+            stopBgMusic();
             fadeInEndScreen(world.character.isDead()); // fade in end screen info e.g. u lost or game over
             goBackToStartScreen();
         }
     }, 1000 / 10);
 }
 
-function goBackToStartScreen() {
-    setTimeout(() => {
-        document.getElementById('end-screen').classList.add('d-none');
-        document.getElementById('start-screen').classList.remove('d-none');
-        document.getElementById('start').classList.remove('d-none');
-    }, 1666);
+function gameOver(){
+    return world.level.endboss.isDead() || world.character.isDead();
 }
 
 function fadeInEndScreen(pepeDied) {
@@ -136,10 +116,44 @@ function setEndScreenImg(srcPath) {
     document.getElementById('end-screen').src = srcPath;
 }
 
-function a() {
-    document.getElementById('info').classList.remove('d-none')
+function goBackToStartScreen() {
+    setTimeout(() => {
+        document.getElementById('end-screen').classList.add('d-none');
+        document.getElementById('start-screen').classList.remove('d-none');
+        document.getElementById('start-btn').classList.remove('d-none');
+    }, 1666);
 }
 
-function b() {
-    document.getElementById('info').classList.add('d-none')
+function stopBgMusic(){
+    AUDIO_BG.pause();
+    AUDIO_BG.currentTime = 0;
+}
+
+//--------------- About Game  ---------------
+function showAboutGame() {
+    document.getElementById('info-about-game').classList.remove('d-none')
+}
+
+function hideAboutGame() {
+    document.getElementById('info-about-game').classList.add('d-none')
+}
+
+//--------------- How To Play  ---------------
+function openHowToPlay() {
+    document.getElementById('start-btn').style.zIndex = -1;
+
+    document.getElementById('how-to-play').classList.add('add');
+    document.getElementById('how-to-play').classList.remove('remove');
+    document.getElementById('how-to-play-btn').innerHTML = 'X';
+    document.getElementById('how-to-play-btn').setAttribute('onclick', 'closeHowToPlay()');
+}
+
+function closeHowToPlay() {
+    document.getElementById('start-btn').style.zIndex = 0;
+
+    document.getElementById('how-to-play').classList.remove('add');
+    document.getElementById('how-to-play').classList.add('remove');
+    document.getElementById('how-to-play-btn').innerHTML = 'How To Play';
+    document.getElementById('how-to-play-btn').blur();
+    document.getElementById('how-to-play-btn').setAttribute('onclick', 'openHowToPlay()');
 }
